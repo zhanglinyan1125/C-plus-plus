@@ -1,0 +1,215 @@
+
+//person.h
+
+class Person  
+{
+public:
+	Person(char *,int );
+	void xianshi();
+protected:
+	char xingming[11];
+	int nianling;
+
+};
+
+
+////////////////////
+
+
+///Date.h
+
+class Date  
+{
+public:
+	Date(int ,int ,int );
+	void out();
+protected:
+	int nian;
+	int yue;
+	int ri;
+};
+
+
+////////
+
+
+//Teacher.h
+//#include"Person.h"多文件需要
+
+
+class Teacher:public Person{  
+
+public:
+	Teacher(char *,int ,char * );
+	void out();
+	void xiugai(class Student& ,int );
+protected:
+	char zhicheng[20];
+
+};
+
+
+////////////
+
+
+
+/////Student.h
+//#include"Date.h"多文件需要
+//#include"Teacher.h"多文件需要
+
+
+
+class Student :public Person{ 
+
+public:
+	Student(char *,int ,int ,int ,int ,int  );
+	void out();
+	friend void Teacher::xiugai(Student& ,int );
+protected:
+	Date d;
+	int fenshu;
+};
+
+
+////////////
+//Date.cpp
+
+//#include "Date.h"多文件需要
+#include<iostream>
+using namespace std;
+
+Date::Date(int year,int month,int day)
+{
+	nian=year;
+	yue=month;
+	ri=day;
+}
+
+void Date::out()
+{
+	cout<<"birthday:"<<nian<<"/"<<yue<<"/"<<ri<<endl;
+}
+////////////////
+
+
+
+
+
+
+//Person.h
+//#include "Person.h"多文件需要
+#include<cstring>
+//#include<iostream>多文件需要
+//using namespace std;多文件需要
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+Person::Person(char *name,int age)
+{
+	strcpy(xingming,name);
+	nianling=age;
+}
+void Person::xianshi()
+{
+	cout<<"name:"<<xingming<<" "<<"age:"<<nianling<<endl;
+}
+////////////
+
+
+
+
+
+
+//Student.cpp
+// Student.cpp: implementation of the Student class.
+//
+//////////////////////////////////////////////////////////////////////
+
+//#include "Student.h"多文件需要
+//#include<cstring>多文件需要
+//#include<iostream>多文件需要
+//using namespace std;多文件需要
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+Student::Student(char *studentname,int studentage,int year,int month,int day,int score):Person(studentname,studentage),d(year,month,day)
+{
+	fenshu=score;
+}
+void Student::out()
+{
+	d.out();
+	cout<<"score:"<<fenshu<<endl;
+}
+//////////////
+
+
+
+
+
+//Teacher.cpp
+// Teacher.cpp: implementation of the Teacher class.
+//
+//////////////////////////////////////////////////////////////////////
+
+//#include "Student.h"多文件需要
+//#include<cstring>多文件需要
+//#include<iostream>多文件需要
+//using namespace std;多文件需要
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+Teacher::Teacher(char *teachername,int teacherage, char *title):Person(teachername,teacherage)
+{
+	strcpy(zhicheng,title);
+}
+
+void Teacher::out()
+{
+	cout<<"title:"<<zhicheng<<endl;
+}
+void Teacher::xiugai(class Student& s,int n)
+{
+	s.fenshu=n;
+
+}
+/////////////
+
+
+
+
+
+
+//主函数.cpp
+//#include<iostream>多文件需要
+//using namespace std;多文件需要
+//#include"Student.h"多文件需要
+
+int main()
+{
+	char studentname[11];
+	char teachername[11];
+	int year,month,day;
+	int score;
+	int studentage,teacherage;
+	char title[20];
+	int n;
+	cin>>studentname>>studentage>>year>>month>>day>>score;
+	cin>>teachername>>teacherage>>title;
+	cin>>n;
+	Student s1(studentname,studentage,year,month,day,score);
+	s1.xianshi();
+	s1.out();
+	Teacher t1(teachername,teacherage,title);
+	t1.xianshi();
+	t1.out();
+	t1.xiugai(s1,n);
+	s1.xianshi();
+	s1.out();
+	return 0;
+}
