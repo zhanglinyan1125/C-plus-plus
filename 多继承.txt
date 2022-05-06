@@ -1,0 +1,267 @@
+// Person.h: interface for the Person class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#if !defined(AFX_PERSON_H__A7EF69A2_23AE_407D_B714_6F05541F97E4__INCLUDED_)
+#define AFX_PERSON_H__A7EF69A2_23AE_407D_B714_6F05541F97E4__INCLUDED_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+class Person  
+{
+public:
+	Person(char *);
+	void Disp();
+protected:
+	char xingming[11];
+};
+
+#endif // !defined(AFX_PERSON_H__A7EF69A2_23AE_407D_B714_6F05541F97E4__INCLUDED_)
+///////////////////
+
+
+
+
+
+
+// Student.h: interface for the Student class.
+//
+//////////////////////////////////////////////////////////////////////
+//#include"Person.h"主函数需要
+
+#if !defined(AFX_STUDENT_H__7B912246_8FCE_4461_847F_DA837703DD1B__INCLUDED_)
+#define AFX_STUDENT_H__7B912246_8FCE_4461_847F_DA837703DD1B__INCLUDED_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+class Student  : virtual public Person
+{
+public:
+	Student(char *,int );
+	void Disp();
+	void Study();
+protected:
+	int nianling;
+};
+
+#endif // !defined(AFX_STUDENT_H__7B912246_8FCE_4461_847F_DA837703DD1B__INCLUDED_)
+////////////////////////
+
+
+
+
+
+
+// Teacher.h: interface for the Teacher class.
+//
+//////////////////////////////////////////////////////////////////////
+//#include"Person.h"主函数需要
+
+#if !defined(AFX_TEACHER_H__F62BC2B4_931A_4B28_98BB_A947074DA8B3__INCLUDED_)
+#define AFX_TEACHER_H__F62BC2B4_931A_4B28_98BB_A947074DA8B3__INCLUDED_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+class Teacher  : virtual public Person
+{
+public:
+	Teacher(char *,char *);
+	void Disp();
+	void Teach();
+protected:
+	char zhicheng[21];
+};
+
+#endif // !defined(AFX_TEACHER_H__F62BC2B4_931A_4B28_98BB_A947074DA8B3__INCLUDED_)
+/////////////////
+
+
+
+
+// Stu_teacher.h: interface for the Stu_teacher class.
+//
+//////////////////////////////////////////////////////////////////////
+//#include"Student.h"主函数需要
+//#include"Teacher.h"主函数需要
+
+#if !defined(AFX_STU_TEACHER_H__A74D4E17_A058_4FE7_8554_7D21376686E6__INCLUDED_)
+#define AFX_STU_TEACHER_H__A74D4E17_A058_4FE7_8554_7D21376686E6__INCLUDED_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+class Stu_teacher : public Student,public Teacher  
+{
+public:
+	Stu_teacher(char *,int );
+	void Disp();
+	void Study();
+	void Teach();
+	
+
+};
+
+#endif // !defined(AFX_STU_TEACHER_H__A74D4E17_A058_4FE7_8554_7D21376686E6__INCLUDED_)
+//////////////////
+
+
+
+
+
+
+
+// Person.cpp: implementation of the Person class.
+//
+//////////////////////////////////////////////////////////////////////
+#include<iostream>
+using namespace std;
+//#include "Person.h"主函数需要
+#include<cstring>
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+Person::Person(char *p)
+{
+	strcpy(xingming,p);
+}
+
+void Person::Disp()
+{
+	cout<<xingming<<endl;
+}
+
+///////////////////
+
+
+
+
+
+
+// Student.cpp: implementation of the Student class.
+//
+//////////////////////////////////////////////////////////////////////
+//#include<iostream>主函数需要
+//using namespace std;主函数需要
+//#include "Student.h"主函数需要
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+Student::Student(char *p,int age):Person(p)
+{
+	nianling=age;
+}
+
+void Student::Disp()
+{
+	cout<<xingming<<endl;
+	cout<<nianling<<endl;
+}
+void Student::Study()
+{
+	cout<<"I'm studying"<<endl;
+}
+
+//////////////////
+
+
+
+
+
+
+// Teacher.cpp: implementation of the Teacher class.
+//
+//////////////////////////////////////////////////////////////////////
+//#include<iostream>主函数需要
+//using namespace std;主函数需要
+//#include "Teacher.h"主函数需要
+//#include<cstring>主函数需要
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+Teacher::Teacher(char *p,char *title):Person(p)
+{
+	strcpy(zhicheng,title);
+}
+void Teacher::Disp()
+{
+	cout<<xingming<<endl;
+	cout<<zhicheng<<endl;
+}
+void Teacher::Teach()
+{
+	cout<<"I'm teaching"<<endl;
+}
+//////////////////
+
+
+
+// Stu_teacher.cpp: implementation of the Stu_teacher class.
+//
+//////////////////////////////////////////////////////////////////////
+//#include<iostream>主函数需要
+//using namespace std;主函数需要
+//#include "Stu_teacher.h"主函数需要
+
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+Stu_teacher::Stu_teacher(char *p,int age):Student(p,age),Teacher(p,"jxzj"),Person(p)											
+{
+	
+}
+
+void Stu_teacher::Disp()
+{
+	cout<<xingming<<endl;
+	cout<<nianling<<endl;
+	cout<<zhicheng<<endl;
+}
+void Stu_teacher::Study()
+{
+	Student::Study();
+}
+void Stu_teacher::Teach()
+{
+	Teacher::Teach();
+}
+/////
+
+
+
+//////主函数.cpp
+//#include<iostream>主函数需要
+//using namespace std;主函数需要
+//#include"Stu_teacher.h"主函数需要
+int main()
+{
+
+    char name[15],title[20]; 
+    int age; 
+    cin>>name>>age>>title;
+    Person p(name);
+    p.Disp();
+    Student s(name,age);
+    s.Disp();
+    s.Study();
+    Teacher t(name,title);
+    t.Disp();
+    t.Teach();
+    Stu_teacher st(name,age); 
+    st.Disp();
+    st.Study(); 
+    st.Teach(); 
+    return 0; 
+} 
