@@ -1,0 +1,35 @@
+二进制文件a.dic中存有2项数据：1--年龄（2字节），2--分数（4字节），两项数据之间没有任何分隔符，将它们显示出来
+
+
+
+说明：二进制文件中所有数据都是用二进制方式写进去的
+
+
+Input
+Output
+输出两项数据
+
+
+Sample Input
+Sample Output
+19,92
+
+
+代码：
+
+#include<iostream>
+using namespace std;
+#include<fstream>
+
+int main()
+{
+	
+	short s1;
+	int s2;
+	fstream  f("d:\\a.dic", ios::in|ios::binary);
+	f.read((char*)&s1,2);
+	cout<<s1<<",";
+	f.read((char*)&s2,4);
+	cout<<s2<<endl;
+	return 0;
+}
