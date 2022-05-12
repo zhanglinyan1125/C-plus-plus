@@ -1,0 +1,54 @@
+Description
+已知5个学生的姓名，年龄，分数，在文本文件a.dic(该文件在当前目录中)中按以下格式存储：
+
+zhang       18  79
+
+sun         21  90
+
+liu         20  55
+
+wang        18  80
+
+zhao        19  86
+
+
+
+其中姓名占10个字符的位置，年龄和分数各占2个字符位置，三个数据项之间各由两个空格隔开，一行共18个可见字符。
+
+将它们读出来，输出到屏幕上。
+
+输出格式为：每人一行，其中：姓名和年龄之间空两个格，年龄和分数之间空两个格。
+
+
+Input
+Output
+Sample Input
+Sample Output
+zhang  18  79
+sun  21  90
+liu  20  55
+wang  18  80
+zhao  19  86
+
+
+
+代码：
+#include<iostream>
+using namespace std;
+#include<fstream>
+
+int main()
+{
+	char name[11]={0};
+	char age[3]={0};
+	char score[3]={0};
+	int i;
+	fstream myfile("a.dic",ios::in);
+	for(i=0;i<5;i++)
+	{
+		myfile>>name>>age>>score;
+		cout<<name<<"  "<<age<<"  "<<score<<endl;
+	}
+	myfile.close();
+	return 0;
+}
