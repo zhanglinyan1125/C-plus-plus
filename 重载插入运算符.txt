@@ -1,0 +1,196 @@
+Description
+定义Student和GraduateStudent（由Student派生）两个类，学生包含姓名和分数两个数据，研究生包括姓名、分数和导师姓名。并使下面的程序能得到正确结果。 
+
+说明：下面的程序已经在后台，系统自动在你提交的代码后面添加上这些代码（即：你提交的程序，不应该再含有下面的这些代码，修改代码时，也应把这些代码去掉再提交）
+
+  
+
+void fn(Student&s)
+
+{
+
+        cout<<s;
+
+}
+
+
+
+int main()   
+
+{
+
+       char s_name[20], t_name[20];
+
+       int  score;
+
+       cin>>s_name>>score;
+
+       Student s(s_name, score);   
+
+       cin>>s_name>>score>>t_name;
+
+
+       GraduateStudent g(s_name, score , t_name);      
+
+       cout<<s<<g;   
+
+       fn(s);
+
+       fn(g);
+
+       return 0;
+
+} 
+Input
+分别输入学生和研究生的数据
+
+Output
+输出样例所示的输出结果
+
+Sample Input
+zhangsan 85
+lisi 90 liulaoshi
+Sample Output
+name:zhangsan,score:85
+name:lisi,score:90,teacher:liulaoshi
+name:zhangsan,score:85
+name:lisi,score:90,teacher:liulaoshi
+
+
+
+代码：
+// Student.h
+//
+//////////////////////////////////////////////////////////////////////
+#include<iostream>
+using namespace std;
+#if !defined(AFX_STUDENT_H__9AF5DFA1_2CA1_4DCB_A146_ED8EBBB1F265__INCLUDED_)
+#define AFX_STUDENT_H__9AF5DFA1_2CA1_4DCB_A146_ED8EBBB1F265__INCLUDED_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+class Student  
+{
+public:
+	Student(char *,int );
+	virtual void disp(ostream&);
+protected:
+	char sxingming[20];
+	int fenshu;
+};
+
+#endif // !defined(AFX_STUDENT_H__9AF5DFA1_2CA1_4DCB_A146_ED8EBBB1F265__INCLUDED_)
+//
+
+
+
+
+// GraduateStudent.h
+//
+//////////////////////////////////////////////////////////////////////
+//#include<iostream>
+//using namespace std;
+//#include"Student.h"
+
+#if !defined(AFX_GRADUATESTUDENT_H__9AFFE38A_3B01_4AE4_99EB_E24E462863C1__INCLUDED_)
+#define AFX_GRADUATESTUDENT_H__9AFFE38A_3B01_4AE4_99EB_E24E462863C1__INCLUDED_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+class GraduateStudent :public Student
+{
+public:
+	GraduateStudent(char *,int ,char *);
+	virtual void disp(ostream &);
+protected:
+	char txingming[20];
+
+};
+
+#endif // !defined(AFX_GRADUATESTUDENT_H__9AFFE38A_3B01_4AE4_99EB_E24E462863C1__INCLUDED_)
+//
+
+
+
+// Student.cpp: implementation of the Student class.
+//
+//////////////////////////////////////////////////////////////////////
+
+//#include "Student.h"
+#include<cstring>
+//#include<iostream>
+//using namespace std;
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+Student::Student(char *p,int score)
+{
+	strcpy(sxingming,p);
+	fenshu=score;
+}
+void Student::disp(ostream& out)
+{
+	out<<"name:"<<sxingming<<","<<"score:"<<fenshu<<endl;
+}
+//
+
+
+
+// GraduateStudent.cpp: implementation of the GraduateStudent class.
+//
+//////////////////////////////////////////////////////////////////////
+
+//#include "GraduateStudent.h"
+//#include<cstring>
+//#include<iostream>
+//using namespace std;
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+GraduateStudent::GraduateStudent(char *p,int score,char *pp):Student(p,score)
+{
+	strcpy(txingming,pp);
+}
+
+void GraduateStudent::disp(ostream &out)
+{
+	out<<"name:"<<sxingming<<","<<"score:"<<fenshu<<","<<"teacher:"<<txingming<<endl;
+}
+//
+
+
+//主函数.cpp
+//#include<iostream>多文件需要
+//using namespace std;多文件需要
+//#include"GraduateStudent.h"多文件需要
+
+ostream & operator <<(ostream& out ,Student & s)
+{
+	s.disp(out);
+	return out;
+}
+void fn(Student&s)
+{
+        cout<<s;
+}
+
+int main()   
+{
+       char s_name[20], t_name[20];
+       int  score;
+       cin>>s_name>>score;
+       Student s(s_name, score);   
+       cin>>s_name>>score>>t_name;
+       GraduateStudent g(s_name, score , t_name);      
+       cout<<s<<g;   
+       fn(s);
+       fn(g);
+       return 0;
+
+} 
