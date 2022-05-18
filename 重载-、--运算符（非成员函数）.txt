@@ -1,0 +1,196 @@
+编写一个Time类,并对“-”和“--”运算符重载，使该类的对象可以互相减 和自减 。    
+
+
+注意：两个重载运算符都不能写成Time的成员函数
+
+
+主函数：      
+
+int main()      
+
+{   
+
+          int h1,m1,s1,h2,m2,s2;
+
+         cin>>h1>>m1>>s1>>h2>>m2>>s2;
+
+Time  t1(h1,m1,s1), t2(h2,m2,s2), t;      
+
+  t=t1-t2;      
+
+  t.disp();      
+
+         t--;      
+
+         t.disp();      
+
+  (--t)--;      
+
+t.disp(); 
+
+(t--).disp();
+
+t.disp();
+
+         return 0;    
+
+}
+Input
+键盘输入两个时间t1、t2的时分秒
+
+Output
+输出程序的运行结果
+
+Sample Input
+3 45 10 1 50 24
+Sample Output
+1:54'46"
+1:54'45"
+1:54'43"
+1:54'43"
+1:54'42"
+
+
+
+代码：
+// Time.h
+//
+//////////////////////////////////////////////////////////////////////
+
+#if !defined(AFX_TIME_H__ECAF27A9_8871_41EA_875B_32726FAAC0CA__INCLUDED_)
+#define AFX_TIME_H__ECAF27A9_8871_41EA_875B_32726FAAC0CA__INCLUDED_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+class Time 
+{
+public:
+	Time (int ,int ,int );
+	Time();
+	void disp();
+	friend Time operator -(Time &,Time &);
+	friend Time& operator --(Time &);
+	friend Time operator --(Time &,int );
+protected:
+	int shi;
+	int fen;
+	int miao;
+
+};
+
+#endif // !defined(AFX_TIME_H__ECAF27A9_8871_41EA_875B_32726FAAC0CA__INCLUDED_)
+//
+
+
+// Time.cpp
+//
+//////////////////////////////////////////////////////////////////////
+
+//#include "Time.h"多文件需要
+#include<iostream>
+using namespace std;
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+Time::Time (int h,int m,int s)
+{
+	shi=h;
+	fen=m;
+	miao=s;
+}
+Time::Time()
+{
+	shi=0;
+	fen=0;
+	miao=0;
+}
+void Time::disp()
+{
+	cout<<shi<<":"<<fen<<"\'"<<miao<<"\""<<endl;
+}
+Time operator -(Time &t1,Time &t2)
+{
+	Time cha;
+	cha.shi=t1.shi-t2.shi;
+	cha.fen=t1.fen-t2.fen;
+	cha.miao=t1.miao-t2.miao;
+	if(cha.fen<0)
+	{
+		cha.shi--;
+		cha.fen=cha.fen+60;
+	}
+	if(cha.miao<0)
+	{
+		cha.fen--;
+		cha.miao=cha.miao+60;
+	}
+	if(cha.shi<0)
+	{
+		cha.shi=cha.shi+24;
+	}
+	return cha;
+}
+Time& operator --(Time &t)
+{
+	t.miao--;
+	if(t.miao<0)
+	{
+		t.fen--;
+		t.miao=t.miao+60;
+	}
+	if(t.fen<0)
+	{
+		t.shi--;
+		t.fen=t.fen+60;
+	}
+	if(t.shi<0)
+	{
+		t.shi=t.shi+24;
+	}
+	return t;
+}
+Time operator --(Time &t,int )
+{
+	Time tt(t);
+	t.miao--;
+	if(t.miao<0)
+	{
+		t.fen--;
+		t.miao=t.miao+60;
+	}
+	if(t.fen<0)
+	{
+		t.shi--;
+		t.fen=t.fen+60;
+	}
+	if(t.shi<0)
+	{
+		t.shi=t.shi+23;
+	}
+	return tt;
+}
+//
+
+
+//主函数.cpp
+//#include<iostream>多文件需要
+//using namespace std;多文件需要
+//#include"Time.h"多文件需要
+int main()      
+{   
+	int h1,m1,s1,h2,m2,s2;
+	cin>>h1>>m1>>s1>>h2>>m2>>s2;
+	Time  t1(h1,m1,s1), t2(h2,m2,s2), t;      
+	t=t1-t2;      
+	t.disp();      
+	t--;      
+	t.disp();      
+	(--t)--;      
+	t.disp(); 
+	(t--).disp();
+	t.disp();
+	return 0;    
+}
